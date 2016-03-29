@@ -18,6 +18,19 @@ This plugin works with Cordova 3.x, 4.x and 5.x version.
 
 Source: [cordova-sms-plugin](https://github.com/cordova-sms/cordova-sms-plugin)
 
+## Repository branches and tags
+
+We are migrating bindings from
+[js_of_ocaml](https://github.com/ocsigen/js_of_ocaml) (low level bindings) to
+[gen_js_api](https://github.com/lexifi/gen_js_api) (high level bindings).
+
+The gen_js_api binding allows to use *pure* ocaml types (you don't have to use
+the ## syntax from js_of_ocaml or Js.string type but only # and string type).
+
+The js_of_ocaml version is available in the branch
+[*js_of_ocaml*](https://github.com/dannywillems/ocaml-cordova-plugin-sms/tree/js_of_ocaml)
+but we **recommend** to use the gen_js_api version which is the master branch.
+
 ## How to use ?
 
 See the official documentation
@@ -33,13 +46,13 @@ documentation on js_of_ocaml). If we did, *sms* will be set to **undefined**
 because the *sms* javascript object doesn't exist when we create
 the variable.
 
-Instead, we provide a function *Sms.sms* of type unit -> Sms.sms
-Js.t which does the binding when you call it.
+Instead, we provide a function *Sms.t* of type unit -> Sms.sms
+which does the binding when you call it.
 So, use
 
 ```OCaml
 let on_device_ready =
-  let sms = Sms.sms () in
+  let sms = Sms.t () in
   (* Some code *)
 
 let _ =
