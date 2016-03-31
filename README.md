@@ -38,7 +38,7 @@ Js.t which does the binding when you call it.
 So, use
 
 ```OCaml
-let on_device_ready =
+let on_device_ready _ =
   let sms = Sms.sms () in
   (* Some code *)
 
