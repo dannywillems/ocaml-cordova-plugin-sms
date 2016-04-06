@@ -1,4 +1,6 @@
-# ocaml-cordova-sms-plugin
+# ocaml-cordova-plugin-sms
+
+* gen_js_api (master branch): [![Build Status](https://travis-ci.org/dannywillems/ocaml-cordova-plugin-sms.svg?branch=master)](https://travis-ci.org/dannywillems/ocaml-cordova-plugin-sms)
 
 Binding to
 [cordova-sms-plugin](https://github.com/cordova-sms/cordova-sms-plugin)
