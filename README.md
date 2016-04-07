@@ -7,7 +7,7 @@ Binding to
 
 [Example
 application](https://github.com/dannywillems/ocaml-cordova-sms-plugin-example).
-**In development**
+**Not developed**
 
 ## What does cordova-sms-plugin do ?
 
@@ -33,6 +33,28 @@ The js_of_ocaml version is available in the branch
 [*js_of_ocaml*](https://github.com/dannywillems/ocaml-cordova-plugin-sms/tree/js_of_ocaml)
 but we **recommend** to use the gen_js_api version which is the master branch.
 
+## How to install and compile your project by using this plugin ?
+
+Don't forget to switch to a compiler **>= 4.03.0**.
+```Shell
+opam switch 4.03.0+beta1
+```
+
+You can use opam by pinning the repository with
+```Shell
+opam pin add cordova-plugin-sms https://github.com/dannywillems/ocaml-cordova-plugin-sms.git
+```
+
+and to compile your project, use
+```Shell
+ocamlfind ocamlc -c -o [output_file] -package gen_js_api -package cordova-plugin-sms [...] -linkpkg [other arguments]
+```
+
+Don't forget to install the cordova plugin activity indicator with
+```Shell
+cordova plugin add cordova-plugin-sms
+```
+
 ## How to use ?
 
 See the official documentation
@@ -43,13 +65,13 @@ See the official documentation
 The device plugin creates a new object called *sms*, but the object is
 available when the *deviceready* event is handled.
 
-We provide a function *Sms.t* of type unit -> Sms.sms
+We provide a function *Cordova_sms.t* of type unit -> Cordova_sms.sms
 which does the binding when you call it.
 So, use
 
 ```OCaml
 let on_device_ready _ =
-  let sms = Sms.t () in
+  let sms = Cordova_sms.t () in
   (* Some code *)
 
 let _ =

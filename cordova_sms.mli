@@ -22,7 +22,7 @@ let intent          = Intent
 
 val create_android_options :
   ?intent:(android_intent [@js.default No_open])  ->
-  unit                                    ->
+  unit                                            ->
   android_options
 [@@js.builder]
 (* --------------------------------------------------------------------------- *)
@@ -47,28 +47,14 @@ val create_options :
 class sms : Ojs.t ->
   object
     inherit Ojs.obj
-    (* send [number] [message] *)
-    method send       : string -> (* number *)
-                        string -> (* message *)
-                        unit
-    (* send [number] [message] [options] *)
-    method send_opt   : string  -> (* number *)
-                        string  -> (* message *)
-                        options -> (* options *)
-                        unit
-    (* send [number] [message] [options] [success_callback *)
-    method send_succ  : string          -> (* number *)
-                        string          -> (* message *)
-                        options         -> (* options *)
-                        (unit -> unit)  -> (* success_cb *)
-                        unit
-    (* send [number] [message] [options] [success_callback [error_callback] *)
-    method send_cb    : string              -> (* number *)
-                        string              -> (* message *)
-                        options             -> (* options *)
-                        (unit -> unit)      -> (* success_cb *)
-                        (string -> unit)    -> (* error_cb *)
-                        unit
+    (* send [number] [message] ?[options] ?[success_callback ?[error_callback] *)
+    method send    : string                                          -> (* number *)
+                     string                                          -> (* message *)
+                     ?opt:(options [@js.default create_options ()])  -> (* options *)
+                     ?succ_cb:(unit -> unit)                         -> (* success_cb *)
+                     ?err_cb:(string -> unit)                        -> (* error_cb *)
+                     unit                                            ->
+                     unit
   end
 (* --------------------------------------------------------------------------- *)
 
