@@ -6,10 +6,6 @@
 Binding to
 [cordova-sms-plugin](https://github.com/cordova-sms/cordova-sms-plugin)
 
-[Example
-application](https://github.com/dannywillems/ocaml-cordova-sms-plugin-example).
-**Not developed**
-
 ## What does cordova-sms-plugin do ?
 
 ```
