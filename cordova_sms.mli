@@ -48,8 +48,8 @@ class sms : Ojs.t ->
   object
     inherit Ojs.obj
     (* send [number] [message] ?[options] ?[success_callback ?[error_callback] *)
-    method send    : string                                          -> (* number *)
-                     string                                          -> (* message *)
+    method send    : num:string                                     -> (* number *)
+                     msg:string                                     -> (* message *)
                      ?opt:(options [@js.default create_options ()])  -> (* options *)
                      ?succ_cb:(unit -> unit)                         -> (* success_cb *)
                      ?err_cb:(string -> unit)                        -> (* error_cb *)
