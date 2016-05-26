@@ -56,22 +56,3 @@ cordova plugin add cordova-plugin-sms
 
 See the official documentation
 [cordova-sms-plugin](https://github.com/cordova-sms/cordova-sms-plugin)
-
-## ! BE CAREFUL !
-
-The device plugin creates a new object called *sms*, but the object is
-available when the *deviceready* event is handled.
-
-We provide a function *Cordova_sms.t* of type unit -> Cordova_sms.sms
-which does the binding when you call it.
-So, use
-
-```OCaml
-let on_device_ready _ =
-  let sms = Cordova_sms.t () in
-  (* Some code *)
-
-let _ =
-  Dom.addEventListener Dom_html.document (Dom.Event.make "deviceready")
-  (Dom_html.handler on_device_ready) Js._false
-```
