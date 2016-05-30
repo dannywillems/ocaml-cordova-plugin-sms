@@ -28,37 +28,52 @@ val create_android_options :
 (* --------------------------------------------------------------------------- *)
 
 (* --------------------------------------------------------------------------- *)
-class options : Ojs.t ->
-  object
-    inherit Ojs.obj
-    method replace_line_breaks  : bool
-    method android              : android_options
-  end
+type options = private Ojs.t
 
 val create_options :
-  ?replace_line_breaks:(bool [@js.default false]) ->
-  ?android:(android_options option [@js.default None])   ->
-  unit                                            ->
+  ?replace_line_breaks:(bool [@js.default false])       ->
+  ?android:(android_options option [@js.default None])  ->
+  unit                                                  ->
   options
 [@@js.builder]
 (* --------------------------------------------------------------------------- *)
 
 (* --------------------------------------------------------------------------- *)
-class sms : Ojs.t ->
-  object
-    inherit Ojs.obj
-    (* send [number] [message] ?[options] ?[success_callback ?[error_callback] *)
-    method send    : num:string                                     -> (* number *)
-                     msg:string                                     -> (* message *)
-                     ?opt:(options [@js.default create_options ()])  -> (* options *)
-                     ?succ_cb:(unit -> unit)                         -> (* success_cb *)
-                     ?err_cb:(string -> unit)                        -> (* error_cb *)
-                     unit                                            ->
-                     unit
-  end
-(* --------------------------------------------------------------------------- *)
+type sms = private Ojs.t
 
-(* --------------------------------------------------------------------------- *)
 val t : unit -> sms
 [@@js.get "sms"]
 (* --------------------------------------------------------------------------- *)
+
+(* --------------------------------------------------------------------------- *)
+val send :
+  ?sms:sms ->
+  num:string ->
+  msg:string ->
+  ?opt:options  -> (* options *)
+  ?succ_cb:(unit -> unit)                         -> (* success_cb *)
+  ?err_cb:(string -> unit)                        -> (* error_cb *)
+  unit                                            ->
+  unit
+
+[@@js.custom
+  val send_internal : sms ->
+                      num:string ->
+                      msg:string ->
+                      ?opt:(options [@js.default create_options ()])  -> (* options *)
+                      ?succ_cb:(unit -> unit)                         -> (* success_cb *)
+                      ?err_cb:(string -> unit)                        -> (* error_cb *)
+                      unit                                            ->
+                      unit
+                      [@@js]
+  let default_sms = t
+  let send ?sms ~num ~msg ?opt ?succ_cb ?err_cb () =
+    let s = match sms with
+    | None -> default_sms ()
+    | Some o -> o
+    in
+    send_internal s ~num ~msg ?opt ?succ_cb ?err_cb ()
+]
+(* --------------------------------------------------------------------------- *)
+
+
